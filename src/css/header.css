@@ -1,0 +1,18 @@
+.header {
+  background-color: #8a002e;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.header > h2 {
+  color: #fff;
+  font-weight: 200;
+}
+
+.logo {
+  height: 34px;
+}
