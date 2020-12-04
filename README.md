@@ -24,3 +24,39 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 
+# Documentation
+
+## Components
+
+### Input Component
+The `<Input />` component can be imported with 
+```
+import Input from './components/Input'
+```
+The component uses the following props
+Prop | Type | Description
+------------ | ------------- | -------------
+type | `string` | Options are 'text' for text field inputs and 'number' for number field inputs. If not defined it defualts to 'text'
+label | `string` | Required. This prop creates the label for the input.
+handleInputValue | `function` | Handles onChange events and passes the field value as a prop.
+
+Example:
+```
+<Input label="This is a label" handleInputValue={()=> //Do Something} />
+```
+### Button Component
+The `<Button />` component can be imported with 
+```
+import Input from './components/Button'
+```
+The component uses the following props
+Prop | Type | Description
+------------ | ------------- | -------------
+buttonStyle | `string` | Options are 'success', 'danger' and 'default'. These options specify the color and style of the button. If none is passed it defaults to 'default'
+label | `string` | Required. This prop creates the label for the button.
+onClickEvent | `function` | Handles onClick event and passes event as a prop.
+
+Example:
+```
+<Button label="This is a label" buttonStyle="success" onClickEvent={()=> //Do Something} />
+```
