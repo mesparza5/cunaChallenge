@@ -1,0 +1,35 @@
+.btn {
+  padding: 10px 30px;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  margin-right: 10px;
+  margin-top: 20px;
+}
+.btn:last-of-type {
+  margin-right: 0;
+}
+.btn:focus {
+  outline: none;
+}
+
+.success {
+  background-color: #22a076;
+}
+.success:hover {
+  background-color: #1c8f69;
+}
+
+.danger {
+  background-color: #942323;
+}
+.danger:hover {
+  background-color: #801f1f;
+}
+
+.default {
+  background-color: #8DABB4;
+}
+.default:hover {
+  background-color: #77949c;
+}

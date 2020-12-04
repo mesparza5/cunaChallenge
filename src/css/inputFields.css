@@ -6,12 +6,15 @@
 
 .input-label {
   margin-bottom: 5px;
+  color: #51676d;
+  font-weight: 300;
 }
 
 .input-field {
   padding: 10px;
-  border-color: rgb(196, 196, 196);
+  font-size: 18px;
   border-style: solid;
+  border: 1px solid rgb(231, 231, 231);
 }
 .input-field:focus {
   outline: none;
