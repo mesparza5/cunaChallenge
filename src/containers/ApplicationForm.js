@@ -2,6 +2,7 @@ import React from 'react';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import {connect} from 'react-redux';
+import {setProcessing} from '../actions/application';
 import {
   addAutoPrice, 
   addAutoMake, 
@@ -11,6 +12,7 @@ import {
 } from '../actions/form';
 
 import '../css/forms.css'
+
 
 const ApplicationForm = (props) => {
   const resetValues = () => {
@@ -65,7 +67,8 @@ const mapStateToProps = (state) => {
     autoMake: state.formReducer.autoMake,
     autoModel: state.formReducer.autoModel,
     userIncome: state.formReducer.userIncome,
-    userCreditScore: state.formReducer.userCreditScore
+    userCreditScore: state.formReducer.userCreditScore,
+    isProcessing: state.applicationReducer.isProcessing,
   }
 };
 
@@ -76,6 +79,7 @@ const mapDispatchToProps = (dispach) => {
     addAutoModel: (payload) => dispach(addAutoModel(payload)),
     addUserIncome: (payload) => dispach(addUserIncome(payload)),
     addUserCreditScore: (payload) => dispach(addUserCreditScore(payload)),
+    setProcessing: (payload) => dispach(setProcessing(payload)),
   }
 };
 

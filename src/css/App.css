@@ -7,3 +7,12 @@
   display: flex;
   justify-content: center;
 }
+
+.disclaimer {
+  margin: 20px;
+  padding: 10px;
+}
+
+.disclaimer > p {
+  font-size: 14px;
+}
