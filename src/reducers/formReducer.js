@@ -10,8 +10,8 @@ const initialState = {
   autoPrice: 0,
   autoMake: '',
   autoModel: '',
-  userIncome: '',
-  userCreditScore: 300,
+  userIncome: 0,
+  userCreditScore: 0,
 }
 
 const formReducer = (state = initialState, action) => {

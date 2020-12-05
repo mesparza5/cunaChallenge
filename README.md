@@ -39,6 +39,7 @@ Prop | Type | Description
 type | `string` | Options are 'text' for text field inputs and 'number' for number field inputs. If not defined it defualts to 'text'
 label | `string` | Required. This prop creates the label for the input.
 handleInputValue | `function` | Handles onChange events and passes the field value as a prop.
+value | `string` | Sets the value for the input. If not defined it defaults to empty string.
 
 Example:
 ```
