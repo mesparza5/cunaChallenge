@@ -9,6 +9,7 @@ const Input = (props) => {
         className="input-field" 
         type={props.type === 'text' || props.type === 'number' ? props.type : 'text'}
         onChange={props.handleInputValue}
+        value={props.value ? props.value : ''}
       />
     </div>
   )
