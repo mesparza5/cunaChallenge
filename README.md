@@ -1,12 +1,13 @@
-# CUNA AutoLoan App
+# CUNA AutoLoan App Challenge
+
+## Installation
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). 
 
-## Available Scripts
 
 In the project directory, you can run:
 
-### `yarn start`
+### `yarn start` or `npm start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -18,12 +19,10 @@ Launches the test runner in the interactive watch mode.
 ### `yarn build`
 
 Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-
+It correctly bundles React in production mode and optimizes the build for the best performance.  
+The build is minified and the filenames include the hashes. Your app is ready to be deployed.  
+  
+  
 # Documentation
 
 ## Components
@@ -40,6 +39,7 @@ type | `string` | Options are 'text' for text field inputs and 'number' for numb
 label | `string` | Required. This prop creates the label for the input.
 handleInputValue | `function` | Handles onChange events and passes the field value as a prop.
 value | `string` | Sets the value for the input. If not defined it defaults to empty string.
+errMsg | `string` | Displays error message. If empty will not display any error.
 
 Example:
 ```

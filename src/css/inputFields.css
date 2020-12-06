@@ -19,3 +19,16 @@
 .input-field:focus {
   outline: none;
 }
+
+.input-err {
+  border-color: red;
+  color: red;
+}
+
+.input-err-msg {
+  color: red;
+  font-size: 12px;
+  float: left;
+  position: absolute;
+  margin-top: 65px;
+}

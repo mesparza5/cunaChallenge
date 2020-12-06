@@ -38,6 +38,7 @@
     ]
   },
   "devDependencies": {
+    "lodash": "^4.17.20",
     "redux-devtools": "^3.7.0"
   }
 }
