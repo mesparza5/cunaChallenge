@@ -7,7 +7,7 @@ const Input = (props) => {
       <label className="input-label">{props.label}</label>
       <input 
         className={`input-field ${props.errorMsg ? 'input-err' : ''}`} 
-        type={props.type === 'text' || props.type === 'number' ? props.type : 'text'}
+        type={props.type === 'text' || props.type === 'number' || props.type === 'password' ? props.type : 'text'}
         onChange={props.handleInputValue}
         value={props.value ? props.value : ''}
       />

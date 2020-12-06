@@ -1,7 +1,8 @@
-import { IS_PROCESSING } from '../actions/types';
+import { IS_PROCESSING, FORM_STATUS } from '../actions/types';
 
 const initialState = {
-  isProcessing: false
+  isProcessing: false,
+  formStatus: 'FORM',
 }
 
 const applicationReducer = (state = initialState, action) => {
@@ -9,6 +10,10 @@ const applicationReducer = (state = initialState, action) => {
     case IS_PROCESSING:
       return {
         ...state, isProcessing: action.data
+      };
+    case FORM_STATUS:
+      return {
+        ...state, formStatus: action.data
       };
     default:
       return state;

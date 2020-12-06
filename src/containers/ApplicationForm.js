@@ -2,12 +2,15 @@ import React, { useCallback } from 'react';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import {connect} from 'react-redux';
-import {setProcessing} from '../actions/application';
 import _ from 'lodash'
+import BadRequest from './BadRequest';
+import Approved from './Approved';
+import {setProcessing, setFormStatus} from '../actions/application';
 import {
   validateEmptyField, 
   validateFieldNumber, 
-  validateFieldCreditScoreRange
+  validateFieldCreditScoreRange,
+  processForm,
 } from '../utils/processForm';
 import {
   addAutoPrice,
@@ -26,6 +29,8 @@ import '../css/forms.css'
 
 
 const ApplicationForm = (props) => {
+
+  //This function resets all the values from the form.
   const resetValues = () => {
     props.addAutoPrice(0);
     props.addAutoModel('');
@@ -38,8 +43,10 @@ const ApplicationForm = (props) => {
     props.addUserIncomeErr('');
     props.addUserCreditScoreErr('');
   };
+
+  //This function validates User Credit Score and checks if is empty, valid number and 
+  //if is the value is in a valid credit score range.
   const checkUserCS = (value) => {
-    console.log(value);
     const checkEmptyValues = validateEmptyField(value);
     const checkNumber = validateFieldNumber(value);
     const checkCreditScoreRange = validateFieldCreditScoreRange(value);
@@ -58,102 +65,155 @@ const ApplicationForm = (props) => {
     }
   }
 
+  //This callback makes debounces the input so we can check for the entire number instead
+  //of triggering on every input change.
   const debounceCheckUserCS = useCallback(
     _.debounce(value => checkUserCS(value), 500), []
   )
+  
+  //This funciton accomodates if the user click on the submittion button with empty fields.
+  const checkForm = () => {
+    const errorMsg = 'Input field cannot be empty.';
+    let failCheck = true;
+    if (!props.autoPrice) {
+      props.addAutoPriceErr(errorMsg);
+      failCheck = false;
+    } 
+    if (!props.autoMake) {
+      props.addAutoMakeErr(errorMsg);
+      failCheck = false;
+    } 
+    if (!props.autoModel) {
+      props.addAutoModelErr(errorMsg);
+      failCheck = false;
+    } 
+    if (!props.userIncome) {
+      props.addUserIncomeErr(errorMsg);
+      failCheck = false;
+    } 
+    if (!props.userCreditScore) {
+      props.addUserCreditScoreErr(errorMsg);
+      failCheck = false;
+    }  
+    return failCheck;
+  }
 
-  return (
-    <div className="form-container">
-      <Input 
-        type="number" 
-        label="Auto Purchase Price" 
-        handleInputValue={(e) => {
-          const value = e.target.value;
-          const checkEmptyValues = validateEmptyField(value);
-          const checkNumber = validateFieldNumber(value);
-          if (checkEmptyValues) {
-            props.addAutoPriceErr(checkEmptyValues);
-            props.addAutoPrice('');
-          } else if (checkNumber) {
-            props.addAutoPriceErr(checkNumber);
-            props.addAutoPrice(value);
-          } else {
-            props.addAutoPriceErr('');
-            props.addAutoPrice(value);
-          }
-        }}
-        value={props.autoPrice}
-        errorMsg={props.autoPriceErr}
-        />
-      <Input 
-        label="Auto Make" 
-        value={props.autoMake}
-        errorMsg={props.autoMakeErr}
-        handleInputValue={(e) => {
-          const value = e.target.value;
-          const checkEmptyValues = validateEmptyField(value);
-          if (checkEmptyValues) {
-            props.addAutoMakeErr(checkEmptyValues);
-            props.addAutoMake('');
-          } else {
-            props.addAutoMakeErr('');
-            props.addAutoMake(value);
-          }
-        }}
-        />
-      <Input 
-        label="Auto Model" 
-        value={props.autoModel}
-        errorMsg={props.autoModelErr}
-        handleInputValue={(e) => {
-          const value = e.target.value;
-          const checkEmptyValues = validateEmptyField(value);
-          if (checkEmptyValues) {
-            props.addAutoModelErr(checkEmptyValues);
-            props.addAutoModel('');
-          } else {
-            props.addAutoModelErr('');
-            props.addAutoModel(value);
-          }
-        }}
-        />
-      <Input 
-        type="number" 
-        label="User Estimated Yearly Income" 
-        value={props.userIncome}
-        errorMsg={props.userIncomeErr}
-        handleInputValue={(e) => {
-          const value = e.target.value;
-          const checkEmptyValues = validateEmptyField(value);
-          const checkNumber = validateFieldNumber(value);
-          if (checkEmptyValues) {
-            props.addUserIncomeErr(checkEmptyValues);
-            props.addUserIncome('');
-          } else if (checkNumber) {
-            props.addUserIncomeErr(checkNumber);
-            props.addUserIncome(value);
-          } else {
-            props.addUserIncomeErr('');
-            props.addUserIncome(value);
-          }
-        }}
-        />
-      <Input 
-        type="number" 
-        label="User Estimated Credit Score" 
-        value={props.userCreditScore}
-        errorMsg={props.userCreditScoreErr}
-        handleInputValue={(e) => {
-          props.addUserCreditScore(e.target.value);
-          debounceCheckUserCS(e.target.value);
-        }}
-        />
+  if (props.formStatus === 'APPROVED') {
+    return (
       <div>
-        <Button label="Reset Form" onClickEvent={() => resetValues() }/>
-        <Button label="Submit Application" buttonStyle="success" onClickEvent={() => console.log('clicked!')}/>
+        <Approved />
       </div>
-    </div>
-  )
+    )
+  } else if (props.formStatus === 'BAD_REQUEST') {  
+    return (
+      <div>
+        <BadRequest />
+      </div>
+    )
+  } else {
+    return (
+      <div className="form-container">
+        <Input 
+          type="number" 
+          label="Auto Purchase Price" 
+          handleInputValue={(e) => {
+            const value = e.target.value;
+            const checkEmptyValues = validateEmptyField(value);
+            const checkNumber = validateFieldNumber(value);
+            if (checkEmptyValues) {
+              props.addAutoPriceErr(checkEmptyValues);
+              props.addAutoPrice('');
+            } else if (checkNumber) {
+              props.addAutoPriceErr(checkNumber);
+              props.addAutoPrice(value);
+            } else {
+              props.addAutoPriceErr('');
+              props.addAutoPrice(value);
+            }
+          }}
+          value={props.autoPrice}
+          errorMsg={props.autoPriceErr}
+          />
+        <Input 
+          label="Auto Make" 
+          value={props.autoMake}
+          errorMsg={props.autoMakeErr}
+          handleInputValue={(e) => {
+            const value = e.target.value;
+            const checkEmptyValues = validateEmptyField(value);
+            if (checkEmptyValues) {
+              props.addAutoMakeErr(checkEmptyValues);
+              props.addAutoMake('');
+            } else {
+              props.addAutoMakeErr('');
+              props.addAutoMake(value);
+            }
+          }}
+          />
+        <Input 
+          label="Auto Model" 
+          value={props.autoModel}
+          errorMsg={props.autoModelErr}
+          handleInputValue={(e) => {
+            const value = e.target.value;
+            const checkEmptyValues = validateEmptyField(value);
+            if (checkEmptyValues) {
+              props.addAutoModelErr(checkEmptyValues);
+              props.addAutoModel('');
+            } else {
+              props.addAutoModelErr('');
+              props.addAutoModel(value);
+            }
+          }}
+          />
+        <Input 
+          type="number" 
+          label="User Estimated Yearly Income" 
+          value={props.userIncome}
+          errorMsg={props.userIncomeErr}
+          handleInputValue={(e) => {
+            const value = e.target.value;
+            const checkEmptyValues = validateEmptyField(value);
+            const checkNumber = validateFieldNumber(value);
+            if (checkEmptyValues) {
+              props.addUserIncomeErr(checkEmptyValues);
+              props.addUserIncome('');
+            } else if (checkNumber) {
+              props.addUserIncomeErr(checkNumber);
+              props.addUserIncome(value);
+            } else {
+              props.addUserIncomeErr('');
+              props.addUserIncome(value);
+            }
+          }}
+          />
+        <Input 
+          type="number" 
+          label="User Estimated Credit Score" 
+          value={props.userCreditScore}
+          errorMsg={props.userCreditScoreErr}
+          handleInputValue={(e) => {
+            props.addUserCreditScore(e.target.value);
+            debounceCheckUserCS(e.target.value);
+          }}
+          />
+        <div>
+          <Button label="Reset Form" onClickEvent={() => resetValues() }/>
+          <Button 
+            label="Submit Application" 
+            buttonStyle="success" 
+            onClickEvent={() => {
+              if (checkForm()) {
+                processForm(props.autoPrice, props.userIncome, props.userCreditScore)
+                  .then(response => props.setFormStatus(response))
+                  .catch(error => props.setFormStatus(error))
+              }
+            }}
+            />
+        </div>
+      </div>
+    )
+  }
 };
 
 const mapStateToProps = (state) => {
@@ -169,6 +229,7 @@ const mapStateToProps = (state) => {
     userIncomeErr: state.formReducer.userIncomeErr,
     userCreditScoreErr: state.formReducer.userCreditScoreErr,
     isProcessing: state.applicationReducer.isProcessing,
+    formStatus: state.applicationReducer.formStatus,
   }
 };
 
@@ -185,6 +246,7 @@ const mapDispatchToProps = (dispach) => {
     addUserIncomeErr: (payload) => dispach(addUserIncomeErr(payload)),
     addUserCreditScoreErr: (payload) => dispach(addUserCreditScoreErr(payload)),
     setProcessing: (payload) => dispach(setProcessing(payload)),
+    setFormStatus: (payload) => dispach(setFormStatus(payload)),
   }
 };
 
