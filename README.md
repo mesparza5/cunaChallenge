@@ -14,7 +14,8 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ### `yarn test`
 
-Launches the test runner in the interactive watch mode.
+Launches the test runner in the interactive watch mode.\
+**Please note the tests are not ready, did not have enough time to create tests.**
 
 ### `yarn build`
 
@@ -41,6 +42,7 @@ handleInputValue | `function` | Handles onChange events and passes the field val
 value | `string` | Sets the value for the input. If not defined it defaults to empty string.
 errMsg | `string` | Displays error message. If empty will not display any error.
 placeholder | `string` | Displays placeholder text. 
+
 Example:
 ```
 <Input label="This is a label" handleInputValue={()=> //Do Something} />
