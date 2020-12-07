@@ -10,6 +10,7 @@ const Input = (props) => {
         type={props.type === 'text' || props.type === 'number' || props.type === 'password' ? props.type : 'text'}
         onChange={props.handleInputValue}
         value={props.value ? props.value : ''}
+        placeholder={props.placeholder}
       />
       <span className="input-err-msg">{props.errorMsg}</span>
     </div>

@@ -74,34 +74,37 @@ const ApplicationForm = (props) => {
   //This funciton accomodates if the user click on the submittion button with empty fields.
   const checkForm = () => {
     const errorMsg = 'Input field cannot be empty.';
-    let failCheck = true;
+    let passedCheck = true;
     if (!props.autoPrice) {
       props.addAutoPriceErr(errorMsg);
-      failCheck = false;
+      passedCheck = false;
     } 
     if (!props.autoMake) {
       props.addAutoMakeErr(errorMsg);
-      failCheck = false;
+      passedCheck = false;
     } 
     if (!props.autoModel) {
       props.addAutoModelErr(errorMsg);
-      failCheck = false;
+      passedCheck = false;
     } 
     if (!props.userIncome) {
       props.addUserIncomeErr(errorMsg);
-      failCheck = false;
+      passedCheck = false;
     } 
     if (!props.userCreditScore) {
       props.addUserCreditScoreErr(errorMsg);
-      failCheck = false;
+      passedCheck = false;
     }  
-    return failCheck;
+    return passedCheck;
   }
 
   if (props.formStatus === 'APPROVED') {
     return (
       <div>
-        <Approved />
+        <Approved handleClick={() => {
+          resetValues();
+          props.setFormStatus('FORM');
+        }}/>
       </div>
     )
   } else if (props.formStatus === 'BAD_REQUEST') {  

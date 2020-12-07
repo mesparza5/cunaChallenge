@@ -40,7 +40,7 @@ label | `string` | Required. This prop creates the label for the input.
 handleInputValue | `function` | Handles onChange events and passes the field value as a prop.
 value | `string` | Sets the value for the input. If not defined it defaults to empty string.
 errMsg | `string` | Displays error message. If empty will not display any error.
-
+placeholder | `string` | Displays placeholder text. 
 Example:
 ```
 <Input label="This is a label" handleInputValue={()=> //Do Something} />
